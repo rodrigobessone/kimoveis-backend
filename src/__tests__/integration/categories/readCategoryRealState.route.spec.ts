@@ -2,8 +2,8 @@ import supertest from "supertest";
 import { DataSource } from "typeorm";
 import app from "../../../app";
 import { AppDataSource } from "../../../data-source";
-import { RealEstate } from "../../../entities";
 import { errorsMock, readCategoryRealStateRouteMock } from "../../mocks";
+import RealEstate from "../../../entities/RealEstate.entities";
 
 describe("GET /categories/:id/realEstate", () => {
   let connection: DataSource;
