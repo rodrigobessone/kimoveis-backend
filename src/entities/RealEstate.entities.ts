@@ -7,9 +7,11 @@ import {
   OneToOne,
   JoinColumn,
   ManyToOne,
+  OneToMany,
 } from "typeorm";
 import Address from "./Address.entities";
 import Category from "./Category.entities";
+import Schedule from "./Schedule.entities";
 
 
 
@@ -32,6 +34,9 @@ export default class RealEstate {
 
   @UpdateDateColumn({ type: "date" })
   updatedAt: Date | String;
+
+  @OneToMany(() => Schedule, (schedules) => schedules.realEstate)
+  schedules: Schedule[];
 
   @OneToOne(() => Address)
   @JoinColumn()

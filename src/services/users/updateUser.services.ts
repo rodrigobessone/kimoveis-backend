@@ -1,6 +1,3 @@
-import { Repository } from "typeorm";
-import { TuserRes, TuserUpdateReq } from "../../interfaces/user.interface";
-import { createUserSchemaRes } from "../../schemas/userSchemas";
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities";
 import { AppError } from "../../errors/appError";

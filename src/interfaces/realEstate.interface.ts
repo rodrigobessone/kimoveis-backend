@@ -1,8 +1,5 @@
 import { z } from "zod";
-import { insertRealEstateSchemaCategories, insertRealEstateSchemaReq, insertRealEstateSchemaRes } from "../schemas/realEstateSchemas";
+import createRealEstateSchema from "../schemas/realEstateSchemas";
 
-export type TrealEstateReq = z.infer<typeof insertRealEstateSchemaReq>;
+export type TrealEstateReq = z.infer<typeof createRealEstateSchema>;
 
-export type TrealEstateCategory = z.infer<typeof insertRealEstateSchemaCategories>;
-
-export type TrealEstateRes = z.infer<typeof insertRealEstateSchemaRes>;

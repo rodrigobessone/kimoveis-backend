@@ -3,7 +3,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  JoinColumn,
 } from "typeorm";
 import RealEstate from "./RealEstate.entities";
 import User from "./Users.entities";
@@ -19,11 +18,9 @@ export default class Schedule {
   @Column("time")
   hour: string;
 
-  @ManyToOne(() => RealEstate)
-  @JoinColumn()
-  realEstateId: number;
+  @ManyToOne(() => RealEstate, (realEstates) => realEstates.schedules)
+  realEstate: RealEstate;
 
-  @ManyToOne(() => User)
-  @JoinColumn()
-  userId: number;
+  @ManyToOne(() => User, (users) => users.schedule)
+  user: User;
 }

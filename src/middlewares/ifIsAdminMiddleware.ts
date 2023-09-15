@@ -9,7 +9,7 @@ export const ifIsAdminMiddleware = async (
   const { decoded } = res.locals;
 
   if (decoded && decoded.admin === true) {
-    return next(); // O usuário é um administrador, continue com a solicitação.
+    return next(); 
   }
 
   throw new AppError("Insufficient permission", 403);

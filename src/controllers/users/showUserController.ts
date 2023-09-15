@@ -1,11 +1,22 @@
 import { Request, Response } from "express";
-import { TuserRes } from "../../interfaces/user.interface";
+import { TuserReadSchema } from "../../interfaces/user.interface";
 import { showUserQuery } from "../../services/users/showUser.services";
+import { User } from "../../entities";
+import { UserResponseSchema } from "../../schemas/userSchemas";
 
 export const showUserController = async (
     _req: Request,
     res: Response
-  ): Promise<Response> => {
-    const listUser: TuserRes[] = await showUserQuery();
-    return res.status(200).json(listUser);
+  ) => {
+    
+    const listUser = await showUserQuery();
+    
+    const responseUser: TuserReadSchema[] = listUser.map((user: User) => {
+
+      const parsedUser = UserResponseSchema.parse(user)
+
+      return parsedUser
+    })
+    
+    return res.status(200).json(responseUser)
   };

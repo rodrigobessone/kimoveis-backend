@@ -2,7 +2,6 @@ import { Repository } from "typeorm";
 import { TloginReq, TtokenLoginRes } from "../../interfaces/login.interface";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import { compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import User from "../../entities/Users.entities";
@@ -17,7 +16,7 @@ export const insertLoginQuery = async (
     },
   });
   
-  if (!user || !user.active) {
+  if (!user) {
     throw new AppError("Invalid credentials", 401);
   }
 

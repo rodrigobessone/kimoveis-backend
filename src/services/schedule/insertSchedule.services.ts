@@ -1,43 +1,36 @@
-import { Repository } from "typeorm";
-import { TscheduleCreateRes, TscheduleReq } from "../../interfaces/schedule.interface";
 import { AppDataSource } from "../../data-source";
-import { AppError } from "../../errors/appError";
 import { RealEstate, Schedule, User } from "../../entities";
+import { AppError } from "../../errors/appError";
+import { Tschedule } from "../../interfaces/schedule.interface";
 
 export const insertScheduleQuery = async (
-    data: TscheduleReq,
+    data: Tschedule,
     userId: number
-  ): Promise<TscheduleCreateRes> => {
-    const scheduleRepository: Repository<Schedule> =
+  ) => {
+    const parseData = new Date(data.date).getDay()
+    
+    if ((parseData === 0) || parseData === 6) {
+      throw new AppError("Invalid date, work days are monday to friday", 400);
+    } 
+
+    const scheduleRepository =
       AppDataSource.getRepository(Schedule);
   
-    const realEstateRepository: Repository<RealEstate> =
+      
+      const realEstateRepository =
       AppDataSource.getRepository(RealEstate);
-  
-    const userRepository: Repository<User> = AppDataSource.getRepository(User);
-  
-    let realEstate: RealEstate | null = await realEstateRepository.findOne({
-      where: { id: data.realEstateId },
-    });
-  
-    const user: User | null = await userRepository.findOne({
+      
+      let realEstate = await realEstateRepository.findOne({
+        where: { id: data.realEstateId },
+      });
+      
+    const userRepository = AppDataSource.getRepository(User);
+    const user = await userRepository.findOne({
       where: { id: userId },
     });
-    if (!realEstate) {
-      throw new AppError("RealEstate not found", 404);
-    }
+
   
-    const obj = {
-      ...data,
-      realEstate: realEstate,
-      user: user!,
-    };
+    await scheduleRepository.save({...data, realEstate: realEstate!, user: user!});
   
-    const schedule: Schedule = scheduleRepository.create(obj);
-  
-    await scheduleRepository.save(schedule);
-  
-    return {
-      message: "Schedule created",
-    };
+   
   };

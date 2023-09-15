@@ -13,11 +13,15 @@ export const createUserSchema = z.object({
 
 export const createUserSchemaRes = createUserSchema.omit({
   password: true,
+    createdAt: true,
+  updatedAt: true,
+  deleteAt: true,
+
 });
+
 export const updateUserSchemaReq = createUserSchema
   .omit({
     id: true,
-    admin: true,
     createdAt: true,
     deletedAt: true,
     updatedAt: true,

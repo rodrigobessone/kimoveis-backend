@@ -21,4 +21,5 @@ export const verifyUserByEmail = async (
   }
 
  return next();
+ 
 };

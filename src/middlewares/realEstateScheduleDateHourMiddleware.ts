@@ -10,19 +10,16 @@ export async function realEstateScheduleDateHourMiddleware(
   ) {
     const { realEstateId, date, hour } = req.body;
   
-    const ifScheduleExists = await AppDataSource.getRepository(Schedule)
-      .createQueryBuilder("schedule")
-      .where("schedule.realEstateId = :realEstateId", { realEstateId })
-      .andWhere("schedule.date = :date", { date })
-      .andWhere("schedule.hour = :hour", { hour })
-      .getOne();
-      if (!ifScheduleExists) {
-        next();
-      } else {
-        throw new AppError(
-          "Schedule to this real estate at this date and time already exists",
-          409
-        );
-      }
+    const ifScheduleExists = AppDataSource.getRepository(Schedule)
+
+    const schedule = await ifScheduleExists.findOne({
+      where: { hour, date, realEstate: {id: realEstateId}}
+    })
+
+    if (schedule) {
+      throw new AppError("Schedule to this real estate at this date and time already exists", 409)
+    } 
+
+    next();
+}
       
-  }

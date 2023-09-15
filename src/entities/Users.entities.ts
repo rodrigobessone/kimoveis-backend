@@ -5,7 +5,9 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from "typeorm";
+import Schedule from "./Schedule.entities";
 
 
 @Entity("users")
@@ -22,9 +24,6 @@ export default class User {
   @Column({ default: false })
   admin: boolean;
 
-  @Column({ default: true }) // Defina o valor padrão como ativo (true)
-  active: boolean;
-
   @Column()
   password: string;
 
@@ -36,4 +35,7 @@ export default class User {
 
   @DeleteDateColumn({ type: "date", nullable: true })
   deletedAt: Date | String;
+
+  @OneToMany(() => Schedule, (schedules) => schedules.user)
+  schedule: Schedule[];
 }

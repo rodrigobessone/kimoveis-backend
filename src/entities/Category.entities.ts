@@ -3,7 +3,7 @@ import RealEstate from "./RealEstate.entities";
 
 @Entity('categories')
 export default class Category {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: "varchar", length: 45, unique: true })

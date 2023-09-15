@@ -16,7 +16,6 @@ export async function verifyIdMiddleware(
     where: { id: id },
   });
 
-  // Se o usuário existir ou se o usuário for um administrador, continue.
   if (user || (res.locals.decoded && res.locals.decoded.admin === true)) {
     return next();
   }

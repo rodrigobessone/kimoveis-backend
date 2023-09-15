@@ -9,9 +9,12 @@ export async function verifyRealEstateMiddleware(
     _res: Response,
     next: NextFunction
   ) {
+
     const id: number = parseInt(req.params.id);
+
     const realEstateRepository: Repository<RealEstate> =
       AppDataSource.getRepository(RealEstate);
+
     let realEstate: RealEstate | null = await realEstateRepository.findOne({
       where: { id: id },
     });

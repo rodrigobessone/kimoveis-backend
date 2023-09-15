@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUserSchemaReq, updateUserSchemaReq } from "../schemas/userSchemas";
+import { createUserSchemaReq } from "../schemas/userSchemas";
 import { verifyBodyMiddleware } from "../middlewares/verifyBodyMiddleware";
 import { insertUserController } from "../controllers/users/insertUserController";
 import { verifyIfTokenIsValidMiddleware } from "../middlewares/verifyIftokenIsValidMiddleware";

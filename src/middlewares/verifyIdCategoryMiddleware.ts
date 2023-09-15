@@ -9,16 +9,19 @@ export async function verifyIdCategoryMiddleware(
   _res: Response,
   next: NextFunction
 ) {
+
   const categoryRepository: Repository<Category> =
     AppDataSource.getRepository(Category);
+
   const id: number = parseInt(req.params.id);
 
   const category: Category | null = await categoryRepository.findOne({
     where: { id: id },
   });
 
-  if (category) {
+  if (!category) {
     throw new AppError("Category not found", 404);
   } 
+  
   return next(); 
 }
